@@ -9,6 +9,7 @@ async function createInterview(req, res) {
   type = "Technical Interview",
 } = req.body;
 
+
 const userId = req.user.userId;
 
     if (!userId || !role || !difficulty || !focusAreas) {
@@ -49,7 +50,33 @@ const userId = req.user.userId;
     });
   }
 }
+async function getUserInterviews(req, res) {
+  try {
+    const userId = req.user.userId;
 
+    const interviews = await prisma.interview.findMany({
+      where: {
+        userId,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    res.json({
+      success: true,
+      interviews,
+    });
+  } catch (error) {
+    console.error("Get interviews failed:", error);
+
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch interviews",
+    });
+  }
+}
 module.exports = {
   createInterview,
+  getUserInterviews,
 };
