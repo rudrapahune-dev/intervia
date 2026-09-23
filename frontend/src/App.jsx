@@ -1,25 +1,15 @@
-import { useEffect, useState } from "react";
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import Features from "./components/Features";
+import HowItWorks from "./components/HowItWorks";
 
 function App() {
-  const [backendStatus, setBackendStatus] = useState("Checking...");
-
-  useEffect(() => {
-    fetch("http://localhost:5000/api/health")
-      .then((response) => response.json())
-      .then((data) => {
-        setBackendStatus(data.message);
-      })
-      .catch(() => {
-        setBackendStatus("Backend connection failed");
-      });
-  }, []);
-
   return (
-    <div>
-      <h1>Intervia</h1>
-      <p>AI-powered interviews, built for real practice.</p>
-
-      <p>Backend status: {backendStatus}</p>
+    <div className="min-h-screen bg-[#0a0a0a] text-white">
+      <Navbar />
+      <Hero />
+      <Features />
+      <HowItWorks />
     </div>
   );
 }
