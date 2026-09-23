@@ -34,3 +34,6 @@ coverage/
 # Temporary files
 *.tmp
 *.temp
+
+# Generated Prisma Client
+backend/src/generated/prisma/
