@@ -7,12 +7,14 @@ const healthRoutes = require("./routes/healthRoutes");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const interviewRoutes = require("./routes/interviewRoutes");
+const authRoutes = require("./routes/authRoutes");
 
 app.use(cors());
 app.use(express.json());
-
+app.use("/api/auth", authRoutes);
 app.use("/api/health", healthRoutes);
-
+app.use("/api/interviews", interviewRoutes);
 app.get("/api/health/db", async (req, res) => {
   try {
     await prisma.$queryRaw`SELECT 1`;
@@ -30,6 +32,7 @@ app.get("/api/health/db", async (req, res) => {
     });
   }
 });
+
 
 app.listen(PORT, () => {
   console.log(`Intervia backend running on http://localhost:${PORT}`);
