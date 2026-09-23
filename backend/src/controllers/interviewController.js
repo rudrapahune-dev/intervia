@@ -2,13 +2,14 @@ const prisma = require("../lib/prisma");
 
 async function createInterview(req, res) {
   try {
-    const {
-      userId,
-      role,
-      difficulty,
-      focusAreas,
-      type = "Technical Interview",
-    } = req.body;
+  const {
+  role,
+  difficulty,
+  focusAreas,
+  type = "Technical Interview",
+} = req.body;
+
+const userId = req.user.userId;
 
     if (!userId || !role || !difficulty || !focusAreas) {
       return res.status(400).json({
