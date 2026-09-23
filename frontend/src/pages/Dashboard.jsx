@@ -156,9 +156,12 @@ function Dashboard() {
                   simulate the conversation.
                 </p>
 
-                <button className="mt-7 rounded-full bg-white px-5 py-3 text-sm font-medium text-black transition hover:bg-zinc-200">
-                  Start an interview
-                </button>
+                <a
+  href="/interview/setup"
+  className="mt-7 inline-flex rounded-full bg-white px-5 py-3 text-sm font-medium text-black transition hover:bg-zinc-200"
+>
+  Start an interview
+</a>
 
               </div>
 
