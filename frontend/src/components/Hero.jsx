@@ -1,154 +1,266 @@
-import { ArrowRight, Mic, Sparkles } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import {
+  ArrowRight,
+  CheckCircle2,
+  Mic,
+  Sparkles,
+  Volume2,
+} from "lucide-react";
+
+function Waveform() {
+  const bars = [10, 18, 28, 16, 35, 22, 30, 14, 26, 38, 20, 30, 16, 24];
+
+  return (
+    <div className="flex h-10 items-center gap-1">
+      {bars.map((height, index) => (
+        <motion.span
+          key={index}
+          className="w-1 rounded-full bg-white/70"
+          animate={{
+            height: [height, Math.max(8, height - 8), height + 8, height],
+          }}
+          transition={{
+            duration: 1.1,
+            repeat: Infinity,
+            delay: index * 0.06,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
+    </div>
+  );
+}
 
 function Hero() {
+  const navigate = useNavigate();
+
+const handleStartInterview = () => {
+  const token = localStorage.getItem("intervia_token");
+
+  if (token) {
+    navigate("/interview/setup");
+  } else {
+    navigate("/register");
+  }
+};
   return (
-    <section className="relative overflow-hidden px-6 py-20 md:py-28">
-      {/* Background glow */}
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-500/10 blur-[120px]" />
+    <section className="relative overflow-hidden px-6 pb-24 pt-20 md:pb-32 md:pt-28">
+      {/* Ambient background */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute left-1/2 top-0 h-[500px] w-[700px] -translate-x-1/2 rounded-full bg-white/[0.025] blur-3xl" />
 
-      <div className="relative mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2">
-
-        {/* LEFT */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-        >
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-900/70 px-4 py-2 text-sm text-zinc-300">
-            <Sparkles size={15} />
-            AI-powered interview practice
-          </div>
+          className="absolute left-[12%] top-[20%] h-2 w-2 rounded-full bg-white/20"
+          animate={{
+            y: [0, -18, 0],
+            opacity: [0.2, 0.7, 0.2],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
 
-          <h1 className="text-5xl font-semibold tracking-tight sm:text-6xl lg:text-7xl">
-            Practice interviews.
-            <br />
-
-            <span className="text-zinc-500">
-              Get better every time.
-            </span>
-          </h1>
-
-          <p className="mt-7 max-w-xl text-lg leading-8 text-zinc-400">
-            Intervia simulates realistic interviews, adapts to your answers,
-            and gives you detailed feedback so you know exactly what to improve.
-          </p>
-
-          <div className="mt-9 flex flex-col gap-4 sm:flex-row">
-            <button className="flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 font-medium text-black transition hover:scale-[1.02] hover:bg-zinc-200">
-              Start an interview
-              <ArrowRight size={18} />
-            </button>
-
-            <button className="rounded-full border border-zinc-800 px-6 py-3.5 font-medium text-zinc-300 transition hover:border-zinc-600 hover:text-white">
-              See how it works
-            </button>
-          </div>
-        </motion.div>
-
-        {/* RIGHT — INTERVIEW CARD */}
         <motion.div
-          initial={{ opacity: 0, x: 40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.15 }}
-          className="relative"
-        >
-          {/* Floating badge */}
+          className="absolute right-[15%] top-[35%] h-1.5 w-1.5 rounded-full bg-white/15"
+          animate={{
+            y: [0, 15, 0],
+            opacity: [0.15, 0.6, 0.15],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      </div>
+
+      <div className="relative mx-auto max-w-7xl">
+        <div className="grid items-center gap-16 lg:grid-cols-[1fr_0.95fr] lg:gap-20">
+          
+          {/* LEFT */}
           <motion.div
-            animate={{ y: [0, -8, 0] }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="absolute -right-4 -top-5 z-10 rounded-2xl border border-zinc-800 bg-zinc-900 px-4 py-3 shadow-2xl"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
           >
-            <p className="text-xs text-zinc-500">Interview status</p>
-            <p className="mt-1 text-sm font-medium text-white">
-              AI is listening
+            {/* Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.5 }}
+              className="mb-7 inline-flex items-center gap-2 rounded-full border border-zinc-800 bg-zinc-950/80 px-3.5 py-2 text-xs text-zinc-400"
+            >
+              <Sparkles size={14} className="text-zinc-300" />
+              AI-powered interview practice
+            </motion.div>
+
+            <h1 className="max-w-3xl text-5xl font-semibold leading-[1.05] tracking-[-0.04em] text-white sm:text-6xl lg:text-7xl">
+              Practice interviews.
+              <br />
+              <span className="text-zinc-500">
+                Get better every time.
+              </span>
+            </h1>
+
+            <p className="mt-7 max-w-xl text-base leading-8 text-zinc-400 md:text-lg">
+              Practice realistic technical interviews with an AI interviewer
+              that asks follow-up questions, listens to your answers, and
+              gives you actionable feedback.
             </p>
+
+            {/* CTA */}
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+             <button
+  type="button"
+  onClick={handleStartInterview}
+  className="group inline-flex items-center justify-center gap-2 rounded-xl bg-white px-5 py-3.5 text-sm font-medium text-black transition hover:bg-zinc-200"
+>
+  Start your first interview
+
+  <ArrowRight
+    size={17}
+    className="transition-transform duration-200 group-hover:translate-x-1"
+  />
+</button>
+
+              <a
+                href="#how-it-works"
+                className="inline-flex items-center justify-center rounded-xl border border-zinc-800 px-5 py-3.5 text-sm font-medium text-zinc-300 transition hover:border-zinc-700 hover:text-white"
+              >
+                See how it works
+              </a>
+            </div>
+
+            {/* Trust line */}
+            <div className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-zinc-600">
+              <span className="flex items-center gap-2">
+                <CheckCircle2 size={15} />
+                Adaptive questions
+              </span>
+
+              <span className="flex items-center gap-2">
+                <CheckCircle2 size={15} />
+                Voice interviews
+              </span>
+
+              <span className="flex items-center gap-2">
+                <CheckCircle2 size={15} />
+                Detailed feedback
+              </span>
+            </div>
           </motion.div>
 
-          {/* Main card */}
-          <div className="rounded-3xl border border-zinc-800 bg-zinc-950/90 p-6 shadow-2xl backdrop-blur-xl">
+          {/* RIGHT — INTERACTIVE PREVIEW */}
+          <motion.div
+            initial={{ opacity: 0, x: 30, scale: 0.97 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.15 }}
+            className="relative"
+          >
+            {/* Floating badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.9, duration: 0.5 }}
+              className="absolute -right-3 -top-5 z-10 hidden rounded-full border border-zinc-800 bg-zinc-950 px-4 py-2 text-xs text-zinc-300 shadow-2xl sm:flex sm:items-center sm:gap-2"
+            >
+              <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
+              AI is listening
+            </motion.div>
 
-            {/* Header */}
-            <div className="flex items-center justify-between border-b border-zinc-800 pb-5">
-              <div>
-                <p className="text-xs text-zinc-500">
-                  BACKEND DEVELOPER
-                </p>
-
-                <p className="mt-1 font-medium">
-                  Technical Interview
-                </p>
-              </div>
-
-              <div className="rounded-full bg-green-500/10 px-3 py-1 text-xs text-green-400">
-                LIVE
-              </div>
-            </div>
-
-            {/* AI question */}
-            <div className="py-8">
-              <div className="mb-3 flex items-center gap-2 text-sm text-zinc-500">
-                <Sparkles size={15} />
-                AI Interviewer
-              </div>
-
-              <p className="text-xl leading-8 text-zinc-100">
-                "Can you explain how you would design a scalable REST API?"
-              </p>
-            </div>
-
-            {/* User answer */}
-            <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-5">
-              <div className="flex items-center justify-between">
-
+            <motion.div
+              animate={{
+                y: [0, -6, 0],
+              }}
+              transition={{
+                duration: 5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="rounded-3xl border border-zinc-800 bg-zinc-950/90 p-4 shadow-2xl shadow-black/30 backdrop-blur-xl"
+            >
+              {/* Top bar */}
+              <div className="flex items-center justify-between border-b border-zinc-900 px-3 pb-4">
                 <div>
-                  <p className="text-xs text-zinc-500">
-                    YOUR RESPONSE
+                  <p className="text-sm font-medium text-white">
+                    Technical Interview
                   </p>
 
-                  <p className="mt-2 text-sm text-zinc-300">
-                    Listening to your answer...
+                  <p className="mt-1 text-xs text-zinc-600">
+                    Backend Developer
                   </p>
                 </div>
 
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-black">
-                  <Mic size={20} />
+                <div className="rounded-full border border-emerald-500/20 bg-emerald-500/5 px-3 py-1 text-[11px] text-emerald-400">
+                  LIVE
+                </div>
+              </div>
+
+              {/* AI message */}
+              <div className="px-3 pt-6">
+                <div className="flex items-start gap-3">
+                  <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-zinc-800 bg-zinc-900">
+                    <Sparkles size={16} className="text-zinc-300" />
+                  </div>
+
+                  <div>
+                    <p className="text-xs text-zinc-600">AI Interviewer</p>
+
+                    <p className="mt-2 max-w-sm text-sm leading-7 text-zinc-200">
+                      Tell me how you would design a scalable REST API for a
+                      backend application.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Voice activity */}
+              <div className="mx-3 mt-7 rounded-2xl border border-zinc-800 bg-zinc-900/50 p-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-xs text-zinc-500">
+                    <Volume2 size={15} />
+                    AI speaking
+                  </div>
+
+                  <span className="text-[11px] text-zinc-700">
+                    00:18
+                  </span>
                 </div>
 
+                <div className="mt-4 flex items-center justify-between">
+                  <Waveform />
+
+                  <div className="ml-4 flex h-9 w-9 items-center justify-center rounded-full border border-zinc-800">
+                    <Mic size={15} className="text-zinc-400" />
+                  </div>
+                </div>
               </div>
 
-              {/* Audio bars */}
-              <div className="mt-5 flex h-8 items-center gap-1">
-                {[12, 20, 30, 16, 26, 34, 18, 28, 14, 22, 32, 18].map(
-                  (height, index) => (
-                    <motion.div
-                      key={index}
-                      animate={{ height: [height, height + 8, height] }}
-                      transition={{
-                        duration: 1,
-                        repeat: Infinity,
-                        delay: index * 0.08,
-                      }}
-                      className="w-1 rounded-full bg-zinc-500"
-                    />
-                  )
-                )}
+              {/* User response */}
+              <div className="px-3 pb-2 pt-5">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs text-zinc-600">
+                    Your response
+                  </span>
+
+                  <span className="text-xs text-zinc-700">
+                    Listening...
+                  </span>
+                </div>
+
+                <div className="mt-3 rounded-2xl border border-zinc-800 bg-black/30 px-4 py-4">
+                  <p className="text-sm leading-6 text-zinc-500">
+                    I would start by separating the API into independent
+                    services and use caching for frequently requested data...
+                  </p>
+                </div>
               </div>
-            </div>
-
-            {/* Bottom */}
-            <div className="mt-5 flex items-center justify-between text-xs text-zinc-500">
-              <span>Question 4 of 10</span>
-              <span>02:18</span>
-            </div>
-
-          </div>
-        </motion.div>
-
+            </motion.div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

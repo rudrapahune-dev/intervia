@@ -33,7 +33,6 @@ app.get("/api/health/db", async (req, res) => {
   }
 });
 
-
-app.listen(PORT, () => {
-  console.log(`Intervia backend running on http://localhost:${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Intervia backend running on http://172.31.28.11:${PORT}`);
 });
